@@ -1,0 +1,106 @@
+.containerNav {
+    background-color: #2f2f2f;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .containerNav div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .containerNav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .containerNav a:hover {
+    color: #007aff;
+  }
+  
+  .containerNav a span {
+    margin-right: 8px;
+  }
+  
+  /* Mobile - Menu lateral */
+  .containerNav .home {
+    display: none; /* Esconde o link 'Home' no mobile */
+  }
+  
+  .containerNav div > div {
+    display: none; /* Ícone do menu para mobile */
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .containerNav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+  }
+  
+  .containerNav ul li {
+    margin: 0 10px;
+  }
+  .active {
+    font-weight: bold; 
+  }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    .containerNav {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+    }
+  
+    .containerNav .home {
+      display: none; /* Esconde o link 'Home' no mobile */
+    }
+  
+    .containerNav div > div {
+      display: block; /* Exibe o ícone de menu no mobile */
+    }
+  
+    .containerNav ul {
+      display: none; /* Menu oculto inicialmente */
+      flex-direction: column;
+      width: 250px; /* Largura da barra lateral */
+      position: fixed;
+      top: 0;
+      left: -250px; /* Esconde a barra lateral fora da tela */
+      background-color: #2f2f2fd2;
+      height: 100%;
+      z-index: 9999;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      transition: left 0.3s ease; /* Animação para a barra lateral */
+    }
+  
+    .containerNav ul.open {
+      display: flex;
+      left: 0; /* Faz a barra lateral deslizar para dentro */
+    }
+  
+    .containerNav  ul li {
+      margin: 10px 0;
+      font-size: 18px;
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  

@@ -1,0 +1,11 @@
+.logoutButton {
+    background-color: #ff4d4d; /* Cor vermelha suave */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remove borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho de fonte */
+    font-weight: bold; /* Deixa o texto em negrito */
+    cursor: pointer; /* Aponta o cursor como mãozinha */
+    transition: background-color 0.3s ease, transform 0
+}
