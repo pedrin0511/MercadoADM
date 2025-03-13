@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import CreateCompany from "./pages/create/CreateCompany/CreateCompany";
 import CreateUser from "./pages/create/CreateUser/CreateUser";
 import AllUsers from "./pages/users/Allusers";
+import AllCompany from "./pages/company/AllCompany";
 
 // Tipo personalizado para o payload do JWT
 interface JwtPayload {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             {
                 path:"allUsers",
                 element:<AllUsers/>
+            },
+            {
+                path:"allCompanys",
+                element:<AllCompany/>
             }
         ]
     },

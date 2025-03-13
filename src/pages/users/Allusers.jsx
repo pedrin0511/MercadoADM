@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import { createClient } from "@supabase/supabase-js";
 import styles from './AllUsers.module.css'
 import { useCreateUser } from "../../context/CreateUserProvider";
 import { API_backend } from "../../config";
+import Return from "../../components/buttons/Return";
 const supabase = createClient('https://emrjrmzevstbmlurreff.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtcmpybXpldnN0Ym1sdXJyZWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTkzOTAsImV4cCI6MjA1NjkzNTM5MH0.LyOva7qCa9ulUE06SAOLQTY_6Lh-dAqSymd171yM7q8')
 
 const AllUsers = () => {
@@ -14,8 +14,8 @@ const AllUsers = () => {
     const [updatedUser, setUpdatedUser] = useState({});
     const [filteredUsers, setFilteredUsers] = useState([]); // Estado para usuários filtrados
     const [page,setPage] = useState(0)
-    const limit = 3
-    
+    const limit = 5
+
     useEffect(() => {
       const cachedUsers = localStorage.getItem("AllUsers");
   
@@ -27,7 +27,12 @@ const AllUsers = () => {
     }, []);
   
 const AtualizarUsers = () =>{
-  fetchAllUsers()
+  localStorage.removeItem("AllUsers")
+
+  setUsers([])
+
+  fetchAllUsers(0,true)
+  window.location.reload()
 }
     
 
@@ -114,11 +119,43 @@ const editUser = async (e) => {
   setEditing(false);
 };
 
+const deleteUser = async (id) => {
+  const isConfirmed = window.confirm("Tem certeza que deseja excluir esse usuário?");
+  console.log(id);
+
+  if (!isConfirmed) return;
+
+  try {
+    const response = await fetch(`${API_backend}/deleteUser/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json(); // Aqui você pega o conteúdo da resposta
+
+    if (response.ok) {
+      // Verifica se a resposta foi bem-sucedida (status 200-299)
+      setEditing(false);
+      alert("Usuário excluído com sucesso!");
+      AtualizarUsers();
+    } else {
+      // Caso haja algum erro, mostre o erro específico retornado do servidor
+      console.error('Erro no backend:', data.error || 'Erro desconhecido');
+      throw new Error(data.error || 'Erro ao deletar usuário');
+    }
+  } catch (error) {
+    console.error('Não foi possível deletar o usuário', error);
+  }
+};
+
   return (
     <div className={styles.container}>
+      <Return/>
   <h1 className={styles.title}>Todos os usuários cadastrados</h1>
-  <button onClick={AtualizarUsers}>Atualizar Usuários</button>
-  {!users ? <p>Carregando usuários...</p>:
+  <button className={styles.verMais} onClick={AtualizarUsers}>Atualizar Usuários</button>
+  {users.length === 0 ? <p>Nenhum usuário cadastrado!</p>:
   <ul className={styles.userList}>
     {users.map((user) => (
       <li key={user.id} className={styles.cardUser} onClick={() => edit(user)}>
@@ -146,7 +183,7 @@ const editUser = async (e) => {
         </div>
       </li>
     ))}
-    <button onClick={VerMais}>Ver mais</button>
+    <button className={styles.verMais} onClick={VerMais}>Ver mais</button>
   </ul>}
   
   
@@ -176,11 +213,14 @@ const editUser = async (e) => {
                 <input type="text" name="cep" value={updatedUser.cep} onChange={handleChange} />
               </label>
               {messageCep && <p>{messageCep}</p>}
+
+              
               <div className={styles.buttonGroup}>
                 <button type="submit" className={styles.saveButton}>Salvar</button>
                 <button type="button" className={styles.cancelButton} onClick={() => setEditing(false)}>Cancelar</button>
               </div>
             </form>
+            <button onClick={() => deleteUser(selectedUser.id)} className={styles.cancelButton}>Excluir {updatedUser.name}</button>
           </div>
         </div>
       )}

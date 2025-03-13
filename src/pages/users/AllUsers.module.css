@@ -95,6 +95,20 @@
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
   }
+
+  .verMais{
+    padding: 1em;
+    border: none;
+    background-color: #005ecb;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: .5s ease;
+    border-radius: 5px;
+  }
+
+  .verMais:hover{
+    background-color: #004696;
+  }
   
   @keyframes fadeIn {
     from {
@@ -167,5 +181,6 @@
   .cancelButton:hover {
     background-color: #b52a37;
   }
+  
   
   

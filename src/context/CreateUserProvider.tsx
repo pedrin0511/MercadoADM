@@ -14,9 +14,20 @@ interface User {
     phone: string;
   }
 
+  interface Company{
+    password: string;
+    email: string;
+    name: string;
+    cep: string;
+    cnpj:string;
+    inscricaoEstadual: number | null;
+    phone: string;
+  }
+
 interface CreateUserContextType{
     userData: User | null,
-    register:(userData : User) => void
+    registerUser:(userData : User) => void
+    registerCompany:(companyData: Company) => void
     formatarCPF:(cpf:string) => string
     formatarCnpj:(cnpj:string) => string
     formatarNumero:(phone:string) => void
@@ -43,7 +54,7 @@ export const UserProvider = ({children}:CreateUserProviderProps) => {
  const [message,setMessage] = useState<string| null>(null)
  const [messageError,setMessageError] = useState<string| null>(null)
  const [messageCep,setMessageCep] = useState<string| null>(null)
-
+ const [company,setCompany] = useState<Company | null>(null)
 
  const formatarCep = (cep: string) => {
     const cleanedCep = cep.replace(/\D/g, ""); // Remove tudo que não é número
@@ -83,8 +94,50 @@ export const UserProvider = ({children}:CreateUserProviderProps) => {
     }
   };
 
+  const registerCompany = async(companyData:Company) =>{
+    console.log(companyData)
+    setCompany(companyData)
+    setLoading(true);
+    setMessage(null)
 
- const register = async(userData:User)=>{
+      try {
+        const response = await fetch(`${API_backend}createCompany`,{
+            method:'POST',
+            headers:{
+                'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify(companyData)
+        })
+
+        const data = await response.json()
+
+        if(response.status === 200){
+            setMessage('Conta criada com sucesso')
+
+            setTimeout(() =>{
+              setMessage('')
+            },3000)
+            console.log("Login bem-sucedido!", data.message);
+            
+        }else{
+            setMessageError(data.error || 'erro ao criar conta')
+            setTimeout(() =>{
+              setMessageError("")
+            },3000)
+        }
+    } catch (error) {
+        setMessageError("Erro ao conectar ao servidor")
+        setTimeout(() =>{
+          setMessageError("")
+        },3000)
+        console.error(error)
+    }finally{
+        setLoading(false)
+    }
+  }
+
+
+ const registerUser = async(userData:User)=>{
     console.log(userData)
     setUser(userData)
     setLoading(true);
@@ -170,7 +223,7 @@ const formatarNumero = (phone: string) => {
 
 
   return (
-     <CreateUserContext.Provider value={{ userData: user, register,formatarCPF,formatarCnpj,formatarNumero, formatarCep,loading,message,messageError,messageCep,ApiCep}}>
+     <CreateUserContext.Provider value={{ userData: user, registerUser,registerCompany,formatarCPF,formatarCnpj,formatarNumero, formatarCep,loading,message,messageError,messageCep,ApiCep}}>
             {children}
         </CreateUserContext.Provider>
   );

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useCreateUser } from "../../../context/CreateUserProvider";
 import styles from './CreateUser.module.css'
+import { Link } from "react-router-dom";
+import Return from "../../../components/buttons/Return";
 
 
 const CreateUser = () => {
 
-  const { register,formatarCPF,formatarCnpj,formatarNumero,formatarCep,ApiCep, message,messageError,messageCep,loading} = useCreateUser();
+  const { registerUser,formatarCPF,formatarCnpj,formatarNumero,formatarCep,ApiCep, message,messageError,messageCep,loading} = useCreateUser();
     
   // Estado do formulário
   const [user, setUser] = useState({
@@ -91,12 +93,15 @@ const CreateUser = () => {
       return;
     }
   
-    register(user);
+    registerUser(user);
   };
 
   return (
+    <div className={styles.User}>
       <div className={styles.container}>
+        <Return/>
           <h1>Cadastrar novo usuário</h1>
+          <Link to="/active/allUsers">Ver todos usuários</Link>
           <form onSubmit={handleSubmit}>
               <div>
                   <label>Nome:</label>
@@ -200,11 +205,12 @@ const CreateUser = () => {
               </div>
               {message && <p className={styles.sucess}>{message}</p>}
               {messageError && <p className={styles.error}>{messageError}</p>}
-              <button type="submit" disabled={loading}>
+              <button className={styles.button} type="submit" disabled={loading}>
               {loading ? <p>Carregando...</p> : <p>Cadastrar</p>}
             </button>
 
           </form>
+      </div>
       </div>
   );
 }
