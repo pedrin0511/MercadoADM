@@ -4,6 +4,10 @@ import styles from './AllUsers.module.css'
 import { useCreateUser } from "../../context/CreateUserProvider";
 import { API_backend } from "../../config";
 import Return from "../../components/buttons/Return";
+import { MdEdit } from "react-icons/md";
+import AllComponent from "../../components/allUsers/AllComponents";
+import { FaBuilding } from "react-icons/fa6";
+
 const supabase = createClient('https://emrjrmzevstbmlurreff.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtcmpybXpldnN0Ym1sdXJyZWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNTkzOTAsImV4cCI6MjA1NjkzNTM5MH0.LyOva7qCa9ulUE06SAOLQTY_6Lh-dAqSymd171yM7q8')
 
 const AllUsers = () => {
@@ -154,11 +158,20 @@ const deleteUser = async (id) => {
     <div className={styles.container}>
       <Return/>
   <h1 className={styles.title}>Todos os usuários cadastrados</h1>
+  <AllComponent
+   storangeKey="AllCompanys"
+         link="/active/allCompanys"
+         icon={FaBuilding}
+         label="empresas"
+  />
   <button className={styles.verMais} onClick={AtualizarUsers}>Atualizar Usuários</button>
   {users.length === 0 ? <p>Nenhum usuário cadastrado!</p>:
   <ul className={styles.userList}>
     {users.map((user) => (
-      <li key={user.id} className={styles.cardUser} onClick={() => edit(user)}>
+      <li key={user.id} className={styles.cardUser}>
+        <div className={styles.iconEddit}>
+                <MdEdit onClick={() => edit(user)}/>
+          </div>
         <div className={styles.userInfo}>
           <p className={styles.userName}>
             <strong>Nome:</strong> {user.name}

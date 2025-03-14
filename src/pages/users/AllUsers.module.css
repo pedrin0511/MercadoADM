@@ -10,7 +10,6 @@
     text-align: center;
     font-size: 28px;
     color: #333;
-    margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
   }
   
@@ -26,12 +25,12 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-    cursor: pointer;
   }
   
   .cardUser:hover {
-    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajuste os valores conforme necessário */
   }
+  
   
   .userInfo, .userDetails {
     margin-bottom: 15px;
@@ -180,6 +179,27 @@
   
   .cancelButton:hover {
     background-color: #b52a37;
+  }
+
+  .iconEddit{
+    font-size: 1.5em;
+    display: flex;
+    justify-content: end;
+    gap: 2em;
+  }
+  
+  .iconEddit span{
+    cursor: pointer;
+  }
+
+  .iconEddit span a{
+    color: black;
+  }
+
+  .iconEddit span a:hover,
+  .iconEddit span
+  :hover{
+    color: rgb(0, 89, 255);
   }
   
   

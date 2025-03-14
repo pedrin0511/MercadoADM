@@ -8,6 +8,7 @@ import CreateCompany from "./pages/create/CreateCompany/CreateCompany";
 import CreateUser from "./pages/create/CreateUser/CreateUser";
 import AllUsers from "./pages/users/Allusers";
 import AllCompany from "./pages/company/AllCompany";
+import CreateProduct from "./pages/company/product/CreateProduct";
 
 // Tipo personalizado para o payload do JWT
 interface JwtPayload {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path:"allCompanys",
                 element:<AllCompany/>
+            },
+            {
+                path:"createProduct/:id",
+                element:<CreateProduct/>
             }
         ]
     },
